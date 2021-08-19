@@ -8,9 +8,23 @@
 import SwiftUI
 
 struct ContentView: View {
+    @EnvironmentObject var viewModel: AppViewModel
+    
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        
+        VStack{
+            if viewModel.signedIn {
+                MainView()
+            } else {
+                NavigationView{
+                    SignIn()
+                }
+                
+            }
+        }
+        .onAppear(perform: {
+            viewModel.signedIn = viewModel.isSignedIn
+        })
     }
 }
 
